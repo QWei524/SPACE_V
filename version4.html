@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPACE VISION</title>
+    <base href="qrc:/html_PyQt_code/frontend/UI/Page/">
+     <link rel="stylesheet" href="style.css">
+     <script src="ui.js"></script>
+
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+    <script src="qrc:///qtwebengine/qwebengine.js"></script>
+    <script src="qrc:///qtwebengine/qwebengineglobal.js"></script>
+    <script src="qrc:///qtwebengine/qwebengineview.js"></script>
+</head>
+<body>
+
+    <img src="qrc:/assets/bg_video_0.01s.gif" class="bg-gif" alt="gifbg" aria-hidden="true">
+
+    <div class="menu">
+        <button id="menu-btn">☰</button>
+        <div id="dropdown" class="dropdown-content">
+            <a href="#" id="setting">Setting</a>
+            <a href="#" id="account">Account</a>
+        </div>
+    </div>
+
+    <div class="welcome_page" id="welcome-page">
+        <div class="title">
+            <h1 class="title">Welcome to space vision</h1>
+            <div class="subtitle">Explore the Universe</div>
+        </div>
+
+        <img src="qrc:/assets/earth.png" alt="Logo" class="logo-img">
+
+        <div class="button">
+            <button class="main-btn" id="login-btn">LOG IN</button>
+            <button class="main-btn" id="signup-btn">SIGN UP</button>
+            <button class="main-btn" id="guest-btn">CONTINUE AS GUEST</button>
+        </div>
+        <div class="help">
+            Need some help? Click here ! <a href="mailto:support@spacevision.net" class="help-link">support@spacevision.net</a>
+        </div>
+        <div class="copyr">© 2025 Space Vision</div>
+    </div>
+
+    <div class="login_page" id="login-page">
+        <div class="title">
+            <h1 class="title">Nice To See You Again!</h1>
+        </div>
+        <div class="input">
+            <input type="text" id="login-username" class="main-input" placeholder="Username">
+            <input type="password" id="login-password" class="main-input" placeholder="Password">
+        </div>
+        <div class="button">
+            <button class="main-btn" id="login-submit">Submit</button>
+            <button class="main-btn" id="login-back">Back To Main Page</button>
+        </div>
+        <div class="copyr">© 2025 Space Vision</div>
+    </div>
+
+    <div class="signup_page" id="signup-page">
+        <div class="title">
+            <h1 class="title">It's Nice To See Some New Faces Here!</h1>
+        </div>
+        <div class="input">
+            <input type="text" id="signup-username" class="main-input" placeholder="Username">
+            <input type="password" id="signup-password" class="main-input" placeholder="Password">
+        </div>
+        <div class="button">
+            <button class="main-btn" id="signup-submit">Submit</button>
+            <button class="main-btn" id="signup-back">Back To Main Page</button>
+        </div>
+        <div class="copyr">© 2025 Space Vision</div>
+    </div>
+
+</body>
+</html>
