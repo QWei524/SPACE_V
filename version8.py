@@ -572,15 +572,9 @@ def set_render_mode(mode: str):
 
 
 if __name__ == "__main__":
-    # 💡 关键：不再需要 initialize()
 
-    # 1️⃣ 关闭沙盒（macOS 必备）
     os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--no-sandbox --disable-gpu-sandbox"
-
-    # 2️⃣ 临时强制软件渲染（防止 Metal / OpenGL 冲突）
     set_render_mode("software")
-
-    # 3️⃣ 启动应用
     app = QApplication(sys.argv)
     appicon = QIcon("SPACEVISION_T/assets/Untitled-2.svg")
     app.setWindowIcon(appicon)
