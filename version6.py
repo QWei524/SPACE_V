@@ -1,3 +1,5 @@
+#a testing file
+
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QLabel, QPushButton,
     QVBoxLayout, QHBoxLayout, QStackedLayout, QLineEdit, QSizePolicy, QFrame, QTextBrowser
@@ -15,7 +17,6 @@ import os, sys
 
 https://eyes.nasa.gov/apps/solar-system/#/home?featured=false&detailPanel=false&logo=false&search=false&shareButton=false&menu=false&collapseSettingsOptions=true&hideExternalLinks=true&surfaceMapTiling=true&hd=true&lighting=natural
 
-# ======================== 样式 ========================
 BUTTON_STYLE = """
 QPushButton {background: transparent;color: 
 white;font-weight: 
@@ -34,14 +35,13 @@ QFrame {
 QLabel { color: white; }
 """
 
-# ======================== 小工具函数 ========================
 def apply_layout_settings(layout, margin=40, spacing=12):
     layout.setContentsMargins(margin, margin, margin, margin)
     layout.setSpacing(spacing)
 
 
 def _safe_get_tz(tz_name: str):
-    """优先返回指定 IANA 时区；若缺 tzdata/不可用则回退系统本地时区。"""
+
     try:
         tz = ZoneInfo(tz_name)
         label = tz_name
@@ -51,23 +51,21 @@ def _safe_get_tz(tz_name: str):
         tz = local_tz
     return tz, label
 
-# ======================== 背景 GIF（QPainter 绘制，避免缩放抖动） ========================
 class Gif_bg(QWidget):
     def __init__(self, gif_path: str, parent=None):
         super().__init__(parent)
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
         self.movie = QMovie(gif_path)
         self.movie.setCacheMode(QMovie.CacheMode.CacheAll)
-        self.movie.frameChanged.connect(self.update)  # 每帧触发重绘
+        self.movie.frameChanged.connect(self.update) 
         self.movie.start()
 
     def paintEvent(self, event):
         painter = QPainter(self)
         pix = self.movie.currentPixmap()
         if not pix.isNull():
-            painter.drawPixmap(self.rect(), pix)  # 拉伸铺满控件区域
+            painter.drawPixmap(self.rect(), pix)  
 
-# ======================== 顶部信息条 ========================
 class TopInfoBar(QFrame):
     def __init__(self, tz_name: str = "Pacific/Auckland", location_text: str = "Auckland, New Zealand"):
         super().__init__()
@@ -120,7 +118,6 @@ class TopInfoBar(QFrame):
         abbr = now.tzname() or "Local"
         self.lbl_tz.setText(f"{self._tz_label} (UTC{sign}{hh:02d}:{mm:02d} / {abbr})")
 
-# ======================== 信息栏（加载本地 HTML） ========================
 class InfoWidget(QWidget):
     def __init__(self, html_path: str = None, parent=None):
         super().__init__(parent)
@@ -130,7 +127,7 @@ class InfoWidget(QWidget):
         layout.setContentsMargins(8, 8, 8, 8)
         layout.setSpacing(6)
 
-        title = QLabel("📘 我的信息栏")
+        title = QLabel("")
         title.setStyleSheet("font-size: 16px; font-weight: bold; color: white;")
         layout.addWidget(title)
 
@@ -145,15 +142,14 @@ class InfoWidget(QWidget):
 
     def load_html(self, path: str | None):
         if not path:
-            self.browser.setHtml("<h3 style='color:#BBE6FF'>欢迎来到 Space Vision</h3><p>这里可以展示文章、日志或说明文档。</p>")
+            self.browser.setHtml("<h3 style='color:#BBE6FF'> Space Vision</h3><p>just an article</p>")
             return
         try:
             with open(path, "r", encoding="utf-8") as f:
                 self.browser.setHtml(f.read())
         except Exception as e:
-            self.browser.setHtml(f"<p style='color:red'>加载失败: {e}</p>")
+            self.browser.setHtml(f"<p style='color:red'>fail: {e}</p>")
 
-# ======================== 主窗口 ========================
 class SkyGuideApp(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -249,7 +245,6 @@ class SkyGuideApp(QMainWindow):
     def open_home_page(self):
         self.stackedLayout.setCurrentWidget(self.home_page)
 
-# ======================== 首页 ========================
 class HomePage(QWidget):
     def __init__(self):
         super().__init__()
@@ -263,8 +258,6 @@ class HomePage(QWidget):
         main_content = QHBoxLayout()
         main_content.setSpacing(16)
         outer.addLayout(main_content)
-
-        # 左：NASA 视图
         self.left_content = _outlined_frame(radius=8)
         self.left_content.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         left_lay = self.left_content.layout()
@@ -297,8 +290,6 @@ class HomePage(QWidget):
 
         main_content.addWidget(self.left_content, 4)
         main_content.addWidget(self.right_content, 1)
-
-# ======================== 公共小部件 ========================
 def _outlined_frame(height: int = 0, radius: int = 8) -> QFrame:
     f = QFrame()
     if height > 0:
@@ -490,17 +481,11 @@ class SignUp_page(QWidget):
         password = self.pass_input.text()
         print("Register:", username, password)
 
-# ======================== 入口（预设 B：ANGLE + D3D11） ========================
 if __name__ == "__main__":
-    # 必须在 QApplication 之前设置：强制 Qt 使用 OpenGLES 路径（ANGLE）
     QCoreApplication.setAttribute(Qt.ApplicationAttribute.AA_UseOpenGLES)
-
-    # 代理：优先使用系统环境；没有就自动探测
     proxy = (os.environ.get("HTTP_PROXY") or os.environ.get("http_proxy")
              or os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy"))
     flag_proxy = f"--proxy-server={proxy}" if proxy else "--proxy-auto-detect"
-
-    # 预设 B：ANGLE + D3D11（硬件加速）——不要混入 --disable-gpu
     flags = [
         "--ignore-gpu-blocklist",
         "--enable-webgl",
@@ -508,15 +493,11 @@ if __name__ == "__main__":
         "--use-angle=d3d11",
         "--remote-debugging-port=9222",
     ]
-
-    # 清理可能强制软件的环境变量
     os.environ.pop("QT_OPENGL", None)
 
     existing = os.environ.get("QTWEBENGINE_CHROMIUM_FLAGS", "")
     merged = " ".join(x for x in [existing, flag_proxy] + flags if x).strip()
     os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = merged
-
-    # 同步到 argv（可选，双保险）
     for f in [flag_proxy] + flags:
         if f and f not in sys.argv:
             sys.argv.append(f)
