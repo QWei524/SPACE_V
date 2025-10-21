@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="/">
+
+    <file>assets/bg_video_0.01s.gif</file>
+    <file>assets/earth.png</file>
+    <file>assets/Untitled-2.svg</file>
+
+    <file>html_PyQt_code/frontend/UI/Page/style.css</file>
+    <file>html_PyQt_code/frontend/UI/Page/ui.js</file>
+
+    <file>html_PyQt_code/frontend/UI/Page/main_page.html</file>
+  </qresource>
+</RCC>
+
