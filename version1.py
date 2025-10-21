@@ -2,21 +2,16 @@ from tkinter import *
 from PIL import Image, ImageTk
 import os
 
-# 只修复能跑：不改变你的坐标/大小/比例逻辑
 class skyguideapp():
     def __init__(self, root):
         self.program = root
         self.program.title("--SPACE VISION --")
         self.program.geometry("500x900")
-        # 不传参也行，这里保持你原调用方式
         self.program.resizable()
 
         # === Canvas ===
         self.canvas = Canvas(self.program, width=500, height=900, highlightthickness=0, bd=0)
         self.canvas.pack(fill="both", expand=True)
-
-        # === 背景图（仅在存在时加载；否则用纯色底避免崩溃）===
-        # 注意：你原本写的是 assests（少了一个 e），我这儿同时尝试两种拼写
         bg_candidates = [
             "/Users/weiqixuan/Desktop/ddt_work/SPACEVISION_T/assests/backgroundimage.jpg",
             "/Users/weiqixuan/Desktop/ddt_work/SPACEVISION_T/assets/backgroundimage.jpg",
@@ -28,12 +23,10 @@ class skyguideapp():
                 self.backg_photo = ImageTk.PhotoImage(self.backg_image)
                 self.canvas.create_image(0, 0, image=self.backg_photo, anchor="nw")
             except Exception as e:
-                # 加载失败就退回纯色
                 self.canvas.create_rectangle(0, 0, 500, 900, fill="#000022", outline="")
         else:
             self.canvas.create_rectangle(0, 0, 500, 900, fill="#000022", outline="")
 
-        # === 其余组件（保持你的类名与调用顺序）===
         self.contact = contactpart(self.canvas)
         self.title_subtitle = title_subtitle_part(self.canvas)
         self.logo = logopart(self.canvas)
@@ -41,10 +34,10 @@ class skyguideapp():
         self.signup_button = signinpart(self.canvas)
         self.cag = cagpart(self.canvas)  # continue as guest
         self.help = helpinformationpart(self.canvas)
-        self.information = imforamtionpart(self.canvas)  # 保持你的拼写
+        self.information = imforamtionpart(self.canvas)
 
 
-class contactpart():  # 三个小图标占位
+class contactpart():  
     def __init__(self, root):
         self.cpf = Frame(root, bg="#5588ff")
         self.cpf.place(x=40, y=10, width=30, height=30)
@@ -62,7 +55,7 @@ class contactpart():  # 三个小图标占位
         self.cwl.place(relwidth=1, relheight=1)
 
 
-class title_subtitle_part():  # 标题/副标题占位（不改比例/布局）
+class title_subtitle_part():
     def __init__(self, root):
         self.tf = Frame(root, bg="black")
         self.tf.place(x=100, y=120, width=300, height=80)
@@ -75,7 +68,7 @@ class title_subtitle_part():  # 标题/副标题占位（不改比例/布局）
         self.stl.place(relwidth=1, relheight=1)
 
 
-class logopart():  # 只修空路径问题；若找不到图，用占位
+class logopart(): 
     def __init__(self, root):
         self.lpf = Frame(root)
         self.lpf.place(x=155, y=268, width=185, height=185)
@@ -132,7 +125,7 @@ class helpinformationpart():
         self.hil.place(relwidth=1, relheight=1)
 
 
-class imforamtionpart():  # 保持你原拼写
+class imforamtionpart(): 
     def __init__(self, root):
         self.imf = Frame(root)
         self.imf.place(x=350, y=740, width=130, height=10)
